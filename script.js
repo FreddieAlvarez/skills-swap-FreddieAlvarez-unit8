@@ -33,3 +33,19 @@ function filterCards(category) {
     }
   });
 }
+
+
+// COST CALCULATOR
+// input fields, button, and display
+const rateInput = document.getElementById('rate');
+const hoursInput = document.getElementById('hours');
+const calculateButton = document.getElementById('calculate');
+const totalCostDisplay = document.getElementById('total-cost');
+
+// On click, calculate total and update display
+calculateButton.addEventListener('click', () => {
+  const rate = parseFloat(rateInput.value) || 0;
+  const hours = parseFloat(hoursInput.value) || 0;
+  const total = calculateTotalCost(rate, hours);
+  totalCostDisplay.textContent = total.toFixed(2);
+});
