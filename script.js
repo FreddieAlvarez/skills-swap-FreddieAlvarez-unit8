@@ -34,7 +34,6 @@ function filterCards(category) {
   });
 }
 
-
 // COST CALCULATOR
 // input fields, button, and display
 const rateInput = document.getElementById('rate');
@@ -48,4 +47,47 @@ calculateButton.addEventListener('click', () => {
   const hours = parseFloat(hoursInput.value) || 0;
   const total = calculateTotalCost(rate, hours);
   totalCostDisplay.textContent = total.toFixed(2);
+});
+
+//Match SKills to users\
+const categoryInput = document.getElementById('category');
+const maxPriceInput = document.getElementById('max-price');
+const findMatchButton = document.getElementById('find-match');
+const matchResultsDiv = document.getElementById('match-results');
+
+// Skills list for matching
+const skillsList = [
+    { title: 'Python Tutoring', category: 'Programming', price: 20 },
+    { title: 'JavaScript Help', category: 'Programming', price: 25 },
+    { title: 'Guitar Lessons', category: 'Music', price: 15 },
+    { title: 'Resume Review', category: 'Career', price: 0 }
+];
+
+findMatchButton.addEventListener('click', () => {
+    const userNeeds = {
+        category: categoryInput.value,
+        maxPrice: parseFloat(maxPriceInput.value) || 0
+    };
+
+    const matches = matchSkillsToUser(userNeeds, skillsList);
+
+    // Clear previous results
+    matchResultsDiv.innerHTML = '';
+
+    if (matches.length === 0) {
+        matchResultsDiv.textContent = 'No matching skills found.';
+        return;
+    }
+
+    // Display each match as a card
+    matches.forEach(skill => {
+        const skillDiv = document.createElement('div');
+        skillDiv.classList.add('card');
+        skillDiv.innerHTML = `
+            <h4>${skill.title}</h4>
+            <p>Category: ${skill.category}</p>
+            <p>Price: $${skill.price}</p>
+        `;
+        matchResultsDiv.appendChild(skillDiv);
+    });
 });
